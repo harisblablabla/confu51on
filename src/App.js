@@ -1,6 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu from './components/MenuComponent'
 
 // function App() {
 //   return (
@@ -26,12 +27,13 @@ import { Navbar, NavbarBrand } from 'reactstrap';
 class App extends Component {
   render(){
     return(
-      <div className="App">
+      <div>
         <Navbar dark color="primary">
           <div className="container">
             <NavbarBrand href="/">Confusion</NavbarBrand>
           </div>
         </Navbar>
+        <Menu/>
       </div>
     )
   }
