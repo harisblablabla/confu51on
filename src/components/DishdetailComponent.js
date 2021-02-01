@@ -5,6 +5,7 @@ class DishDetail extends Component {
 
     constructor(props) {
         super(props)
+        console.log(this.props.selectedDish)
     }
 
     renderComments = (comments) => {
@@ -58,9 +59,11 @@ class DishDetail extends Component {
     render() {
 
         return(
-            <div className='row justify-content-center'>
-                {this.renderDish(this.props.selectedDish)}
-                {this.renderComments(this.props.selectedDish)}
+            <div className='container'>
+                <div className='row justify-content-center'>
+                    {this.renderDish(this.props.selectedDish)}
+                    {this.renderComments(this.props.selectedDish)}
+                </div>
             </div>
         )
     }
