@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Control, Errors, LocalForm } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardImg, CardText, CardTitle, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
 
     // ====validation====== //
@@ -109,7 +110,7 @@ class CommentForm extends Component {
             return(
             <div className='col-12 col-md-5 m-1'>
                 <Card>
-                   <CardImg top src={dish.image} alt={dish.name}/>
+                   <CardImg top src={baseUrl + dish.image} alt={dish.name}/>
                    <CardBody>
                       <CardTitle>{dish.name}</CardTitle>
                       <CardText>{dish.description}</CardText>
