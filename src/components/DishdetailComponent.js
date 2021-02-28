@@ -32,7 +32,7 @@ class CommentForm extends Component {
     handleSubmit(values) {
         console.log(values)
         alert('current value : ' + JSON.stringify(values))
-        this.props.addComment(this.props.dishId,values.rating,values.author, values.comment)
+        this.props.postComment(this.props.dishId,values.rating,values.author, values.comment)
     }
     
     render() {
@@ -76,8 +76,7 @@ class CommentForm extends Component {
     }
 }
 
-    const RenderComment = ({comments, dishId, addComment}) => {
-        console.log(addComment,dishId)
+    const RenderComment = ({comments, dishId, postComment}) => {
         if(comments) {
             const comment = comments.map( (res) =>  {
                 const date = new Date(res.date)
@@ -96,7 +95,7 @@ class CommentForm extends Component {
                 <div className='col-12 col-md-5 m-1'>
                     <h4>Comments</h4>
                     {comment}
-                    <CommentForm dishId={dishId} addComment={addComment}/>
+                    <CommentForm dishId={dishId} postComment={postComment}/>
                 </div>
             )
         }
@@ -161,7 +160,7 @@ class CommentForm extends Component {
                     </div>
                     <div className='row justify-content-center'>
                         <RenderDish dish={props.dish}/>
-                        <RenderComment comments={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
+                        <RenderComment comments={props.comments} postComment={props.postComment} dishId={props.dish.id}/>
                     </div>
                 </div>
             )
