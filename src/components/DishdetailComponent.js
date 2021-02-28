@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardImg, CardText, CardTitle, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
+import {Fade, Stagger, FadeTransform} from 'react-animation-components'
 
     // ====validation====== //
 
@@ -78,23 +79,26 @@ class CommentForm extends Component {
 
     const RenderComment = ({comments, dishId, postComment}) => {
         if(comments) {
-            const comment = comments.map( (res) =>  {
-                const date = new Date(res.date)
-                const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
-                const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(date)
-                return (
-                    <ul key={res.id} className='list-unstyled'>
-                        <li>{res.comment}</li>
-                        <br/>
-                        <li>--{res.author} , {`${month} ${day}, ${year}`}</li>
-                    </ul>
-                )
-            })
-
             return (
                 <div className='col-12 col-md-5 m-1'>
                     <h4>Comments</h4>
-                    {comment}
+                    <ul className='list-unstyled'>
+                        <Stagger in>
+                        {comments.map( (res) => {
+                            const date = new Date(res.date)
+                            const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
+                            const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(date)
+                            return (
+                                <Fade in key={res.id}>
+                                <li>
+                                <p>{res.comment}</p>
+                                <p>--{res.author} , {`${month} ${day}, ${year}`}</p>
+                                </li>
+                                </Fade>
+                            )
+                        })}
+                        </Stagger>
+                    </ul>
                     <CommentForm dishId={dishId} postComment={postComment}/>
                 </div>
             )
@@ -108,13 +112,17 @@ class CommentForm extends Component {
         if(dish) {
             return(
             <div className='col-12 col-md-5 m-1'>
-                <Card>
-                   <CardImg top src={baseUrl + dish.image} alt={dish.name}/>
-                   <CardBody>
-                      <CardTitle>{dish.name}</CardTitle>
-                      <CardText>{dish.description}</CardText>
-                   </CardBody>
-                </Card>
+                <FadeTransform in transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                    <Card>
+                    <CardImg top src={baseUrl + dish.image} alt={dish.name}/>
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                    </Card>
+                </FadeTransform>
              </div>
             )
         }
