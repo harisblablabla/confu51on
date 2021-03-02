@@ -29,10 +29,10 @@ class CommentForm extends Component {
             isModalOpen: !this.state.isModalOpen
         })
     }
+    
 
     handleSubmit(values) {
         console.log(values)
-        alert('current value : ' + JSON.stringify(values))
         this.props.postComment(this.props.dishId,values.rating,values.author, values.comment)
     }
     

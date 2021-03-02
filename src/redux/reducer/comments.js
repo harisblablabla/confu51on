@@ -12,6 +12,8 @@ export const Comments = (state = {errMess: null, comments: []},action) => {
         case ActionTypes.ADD_COMMENT:
             let comment = action.payload
             // return state.concat(comment)
+            console.log(comment)
+            // alert(JSON.stringify(comment))
             return {...state,comments: state.comments.concat(comment)}
 
         default:

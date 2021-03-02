@@ -2,7 +2,79 @@ import { baseUrl } from '../../shared/baseUrl'
 import * as ActionTypes from './ActionTypes'
 
 
-console.log('action creators')
+//assigment 4
+
+export const leadersLoading = () => ({
+    type: ActionTypes.LEADERS_LOADING
+})
+
+export const leadersFailed = (errmess) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload: errmess
+})
+
+export const addLeaders = (leaders) => ({
+    type: ActionTypes.ADD_LEADERS,
+    payload: leaders
+})
+
+export const addFeedback = (feedback) => ({
+    type: ActionTypes.ADD_FEEDBACK,
+    payload: feedback
+})
+
+export const fetchLeaders = () => (dispatch) => {
+    dispatch(leadersLoading())
+
+    return fetch(baseUrl+'leaders')
+    .then(response => {
+        if(response.ok) return response
+        else {
+            let error = new Error('Error ' + response.status + ' : ' + response.statusText)
+            error.response = response
+            throw error
+        }
+    }, error => {
+        let errmess = new Error(error.message)
+        throw errmess
+    })
+    .then(response => response.json())
+    .then(data => dispatch(addLeaders(data)))
+    .catch(error => dispatch(leadersFailed(error.message)))
+}
+
+export const postFeedback = (values) => (dispatch) => {
+
+    const newFeedback = {...values}
+
+    return fetch(baseUrl+'feedback',{
+        method: 'POST',
+        body: JSON.stringify(newFeedback),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then( response => {
+        if(response.ok) return response
+        else {
+            let error = new Error('Error ' + response.status + ' : ' + response.statusText)
+            error.response = error
+            throw error
+        }
+    }, error => {
+        let errmess = new Error(error.message)
+        throw errmess
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Thank you for your feedback! \n' + JSON.stringify(data))
+        dispatch(addFeedback(data))
+    })
+    .catch(error => alert('Your comment could not be posted\nError: '+error.message))
+}
+
+
 
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
@@ -140,7 +212,11 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
         throw errmess
     })
     .then(response => response.json())
-    .then(response => dispatch(addComment(response)))
+    .then(response => {
+        console.log(response)
+        alert(JSON.stringify(response))
+        dispatch(addComment(response))
+    })
     .catch(error => {
         console.log('post comment', error.message)
         alert('Your comment could not be posted\nError: '+error.message)

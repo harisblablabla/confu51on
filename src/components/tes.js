@@ -25,3 +25,28 @@ console.log(ooo)
 // console.log(...this.state.touched)
 
 sell(...myb,'L','terakhir')
+
+//palindrom
+let regex = /[^A-Za-z0-9]/g
+
+const strNormal = str.toLowerCase().replace(regex,'')
+const reverz = reverse(str).toLowerCase().replace(regex,'')
+
+if(strNormal === reverz) return strNormal
+
+let strlen = strNormal.length
+for(let i=0;i<strlen;i++) {
+  let partial = strNormal.substring(0,i) + strNormal.substring(i+1, strlen)
+  let reversed = reverse(partial)
+  if(partial === reversed) return i
+}
+return 'not possible'
+}
+
+function reverse(str) {
+let newStr = ''
+for(let i=str.length; i>=0; i--) {
+  newStr += str.charAt(i)
+}
+return newStr
+}

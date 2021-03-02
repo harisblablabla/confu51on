@@ -21,7 +21,6 @@ import { Loading } from './LoadingComponent';
         }
 
         const Menu = (props) => {
-            console.log(props)
             const menu = props.dishes.dishes.map( (dish) => {
                 return (
                     <div key={dish.id} className="col-12 col-md-5 m-1">
@@ -43,7 +42,7 @@ import { Loading } from './LoadingComponent';
                 return (
                     <div className='container'>
                         <div className='row'>
-                            <h4>{props.errMess}</h4>
+                            <h4>{props.dishes.errMess}</h4>
                         </div>
                     </div>
                 )
